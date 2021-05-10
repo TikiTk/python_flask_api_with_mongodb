@@ -112,9 +112,17 @@ class LookUpIP(Resource):
                 "status": 200,
                 "obj": get_ip_sentiment_from_db(ip)}
 
+class ClearDatabase(Resource):
+    def get(self):
+        domains.delete_many({})
+        Saved_IPs.delete_many({})
+        return {
+            "status": 200,
+            "obj": "All the data has been cleared"}
 
 api.add_resource(LookUpIP, "/lookupip")
 api.add_resource(LookUpDomain, "/lookupdomain")
+api.add_resource(ClearDatabase,"/cleardb")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
